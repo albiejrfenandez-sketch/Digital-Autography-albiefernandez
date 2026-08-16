@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Autobiography | Albie V. Fernandez Jr.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1c2620;
+    --ink-soft:#2b382f;
+    --paper:#f4ede0;
+    --paper-dim:#e9dfcc;
+    --gold:#c1893c;
+    --gold-deep:#8c5a22;
+    --pine:#3f5c4c;
+    --thread:#b6461f;
+    --line: rgba(244,237,224,0.16);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    margin:0 0 .3em 0;
+    color:var(--ink);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.72rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--gold-deep);
+    display:block;
+    margin-bottom:.8em;
+  }
+  a{color:inherit;}
+
+  /* ---- URL banner ---- */
+  .url-banner{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.78rem;
+    text-align:center;
+    padding:.6em 1em;
+    letter-spacing:.02em;
+  }
+  .url-banner a{ color:var(--gold); text-decoration:underline; }
+
+  /* ---- Nav ---- */
+  nav{
+    position:sticky; top:0; z-index:50;
+    display:flex; flex-wrap:wrap; justify-content:center; gap:1.6em;
+    background:rgba(244,237,224,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(28,38,32,0.12);
+    padding:.9em 1em;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.72rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+  }
+  nav a{ text-decoration:none; color:var(--ink-soft); opacity:.75; transition:opacity .2s; }
+  nav a:hover{ opacity:1; color:var(--gold-deep); }
+
+  section{ padding:5.5em 1.5em; max-width:920px; margin:0 auto; }
+
+  /* ---- Hero ---- */
+  .hero{
+    background:var(--ink);
+    color:var(--paper);
+    padding:6em 1.5em 5em;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:auto -10% -60% -10%;
+    height:420px;
+    background:radial-gradient(circle, rgba(193,137,60,0.25), transparent 65%);
+  }
+  .hero-inner{ max-width:920px; margin:0 auto; position:relative; }
+  .hero .eyebrow{ color:var(--gold); }
+  .hero h1{
+    font-size:clamp(2.4rem, 6vw, 4rem);
+    font-weight:600;
+    color:var(--paper);
+    max-width:11ch;
+  }
+  .hero p.lede{
+    max-width:52ch;
+    font-size:1.05rem;
+    color:rgba(244,237,224,.8);
+    margin-top:1em;
+  }
+  .id-card{
+    margin-top:2.6em;
+    border:1px solid rgba(244,237,224,.25);
+    border-left:3px solid var(--gold);
+    padding:1.1em 1.4em;
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:.85rem;
+    background:rgba(244,237,224,.04);
+  }
+  .id-card strong{ display:block; font-family:'Fraunces', serif; font-size:1.3rem; font-weight:600; margin-bottom:.15em; }
+
+  /* ---- section headers ---- */
+  .section-head{ margin-bottom:2.2em; max-width:62ch; }
+  .section-head h2{ font-size:clamp(1.8rem, 4vw, 2.5rem); }
+  .section-head p{ color:var(--ink-soft); }
+
+  /* ---- stitched divider (signature motif) ---- */
+  .stitch{
+    height:1px;
+    background-image:repeating-linear-gradient(90deg, var(--gold-deep) 0 8px, transparent 8px 16px);
+    margin:0 auto;
+    max-width:920px;
+    opacity:.55;
+  }
+
+  /* ---- About ---- */
+  .about-grid{ display:grid; grid-template-columns:1.3fr 1fr; gap:2.5em; align-items:start; }
+  .facts{ font-family:'IBM Plex Mono', monospace; font-size:.85rem; border-top:1px solid var(--line-dark, rgba(28,38,32,.15)); }
+  .facts div{ display:flex; justify-content:space-between; gap:1em; padding:.8em 0; border-bottom:1px solid rgba(28,38,32,.12); }
+  .facts span:first-child{ color:var(--gold-deep); text-transform:uppercase; letter-spacing:.08em; font-size:.72rem; }
+  @media (max-width:720px){ .about-grid{ grid-template-columns:1fr; } }
+
+  /* ---- Childhood stages ---- */
+  .stage{
+    display:grid; grid-template-columns:280px 1fr; gap:2.2em; align-items:center;
+    padding:2.4em 0; border-bottom:1px solid rgba(28,38,32,.12);
+  }
+  .stage:last-child{ border-bottom:none; }
+  .stage:nth-child(even){ grid-template-columns:1fr 280px; }
+  .stage:nth-child(even) .stage-photo{ order:2; }
+  .stage-photo img{
+    width:100%; aspect-ratio:4/5; object-fit:cover;
+    border:1px solid rgba(28,38,32,.15);
+    filter:sepia(.08) saturate(1.05);
+  }
+  .stage-age{
+    font-family:'IBM Plex Mono', monospace; font-size:.72rem; letter-spacing:.12em;
+    color:var(--thread); text-transform:uppercase; display:block; margin-bottom:.4em;
+  }
+  @media (max-width:640px){
+    .stage, .stage:nth-child(even){ grid-template-columns:1fr; }
+    .stage:nth-child(even) .stage-photo{ order:0; }
+    .stage-photo img{ aspect-ratio:16/10; }
+  }
+
+  /* ---- LOGB ---- */
+  .logb-types{ display:grid; grid-template-columns:repeat(4,1fr); gap:1em; margin:2em 0; }
+  .logb-types div{ background:var(--paper-dim); border:1px solid rgba(28,38,32,.1); padding:1.1em; font-size:.85rem; }
+  .logb-types div.active{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
+  .logb-types .glyph{ font-size:1.5rem; display:block; margin-bottom:.3em; }
+  .logb-types h4{ margin:0 0 .3em; font-family:'Fraunces',serif; font-size:1rem; }
+  @media (max-width:680px){ .logb-types{ grid-template-columns:repeat(2,1fr); } }
+
+  .score-bars{ margin:2.4em 0; font-family:'IBM Plex Mono', monospace; font-size:.85rem; }
+  .score-row{ display:grid; grid-template-columns:110px 1fr 3ch; align-items:center; gap:.8em; margin-bottom:.7em; }
+  .score-track{ background:var(--paper-dim); height:12px; position:relative; }
+  .score-fill{ background:var(--gold); height:100%; }
+  .score-row.dominant .score-fill{ background:var(--thread); }
+  .score-row.dominant span:first-child{ color:var(--thread); font-weight:600; }
+
+  .logb-result-card{
+    display:grid; grid-template-columns:1fr 260px; gap:2.2em; align-items:center;
+    background:var(--ink); color:var(--paper); padding:2.2em; margin-top:2.4em;
+  }
+  .logb-result-card img{ width:100%; border:1px solid rgba(244,237,224,.2); }
+  .logb-result-card .eyebrow{ color:var(--gold); }
+  @media (max-width:680px){ .logb-result-card{ grid-template-columns:1fr; } }
+
+  /* ---- Genealogy ---- */
+  .heirloom{ display:grid; grid-template-columns:1fr 1fr; gap:2.6em; align-items:center; }
+  .heirloom img{ width:100%; border:1px solid rgba(28,38,32,.15); }
+  .heirloom-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--thread); display:block; margin-bottom:.5em;
+  }
+  @media (max-width:720px){ .heirloom{ grid-template-columns:1fr; } }
+
+  /* ---- OCEAN ---- */
+  .ocean-trait{
+    display:grid; grid-template-columns:70px 1fr; gap:1.4em; padding:1.6em 0;
+    border-bottom:1px solid rgba(28,38,32,.12);
+  }
+  .ocean-trait .letter{
+    font-family:'Fraunces', serif; font-size:2.4rem; font-weight:600; color:var(--gold-deep);
+  }
+  .ocean-trait h4{ margin:0 0 .3em; font-family:'Fraunces', serif; font-size:1.15rem; }
+  blockquote{
+    font-family:'Fraunces', serif; font-style:italic; font-size:1.3rem;
+    border-left:3px solid var(--gold); padding-left:1em; margin:2.4em 0; color:var(--ink-soft);
+  }
+  .learned{ background:var(--paper-dim); padding:1.8em; margin-top:1.5em; }
+
+  /* ---- Reflection / footer ---- */
+  .reflection{ background:var(--ink); color:var(--paper); }
+  .reflection .section-head p{ color:rgba(244,237,224,.75); }
+  .reflection p{ max-width:68ch; }
+  footer{
+    text-align:center; padding:2.6em 1em; font-family:'IBM Plex Mono', monospace;
+    font-size:.78rem; color:var(--ink-soft); background:var(--paper-dim);
+  }
+</style>
+</head>
+<body>
+
+<div class="url-banner">
+  Live at: <a href="#" id="site-url">[ replace with your published GitHub Pages / Bitly link ]</a>
+</div>
+
+<nav>
+  <a href="#about">About Me</a>
+  <a href="#childhood">Childhood</a>
+  <a href="#logb">LOGB</a>
+  <a href="#genealogy">Genealogy</a>
+  <a href="#ocean">OCEAN</a>
+  <a href="#reflection">Reflection</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">Digital Autobiography &middot; Phase 1</span>
+    <h1>All About Me</h1>
+    <p class="lede">A small story about my childhood, personality, family, and the experiences that helped shape who I am today.</p>
+    <div class="id-card">
+      <strong>Albie V. Fernandez Jr.</strong>
+      BSIT — Bachelor of Science in Information Technology · First Year
+    </div>
+  </div>
+</header>
+
+<div class="stitch"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-head">
+    <span class="eyebrow">01 &middot; Personal Information</span>
+    <h2>About Me</h2>
+  </div>
+  <div class="about-grid">
+    <p>My name is Albie V. Fernandez Jr., and I am a first-year BSIT student. This digital autobiography brings together different parts of my life — from my childhood stages to my personality and family background — so I can look back and better understand how I became the person I am today.</p>
+    <div class="facts">
+      <div><span>Name</span><span>Albie V. Fernandez Jr.</span></div>
+      <div><span>Course</span><span>BSIT, 1st Year</span></div>
+      <div><span>Project</span><span>Digital Autobiography — Phase 1</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="stitch"></div>
+
+<!-- CHILDHOOD -->
+<section id="childhood">
+  <div class="section-head">
+    <span class="eyebrow">02 &middot; Childhood</span>
+    <h2>My Childhood Stages</h2>
+    <p>These photos represent three stages of my early life: the Preparatory Stage, the Play Stage, and the Game Stage.</p>
+  </div>
+
+  <div class="stage">
+    <div class="stage-photo"><img src="images/preparatory.jpg" alt="Albie during the Preparatory Stage, celebrating a birthday with family"></div>
+    <div>
+      <span class="stage-age">Birth – 2 years old</span>
+      <h3>Preparatory Stage</h3>
+      <p>This photo was taken during a family birthday celebration, one of my earliest memories captured on camera. At this stage I was still discovering the world mostly through the people closest to me — being held, comforted, and celebrated by family. It's a small moment, but it says a lot about how much care surrounded me from the very beginning.</p>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-photo"><img src="images/play.jpg" alt="Albie during the Play Stage, smiling at home"></div>
+    <div>
+      <span class="stage-age">2 – 6 years old</span>
+      <h3>Play Stage</h3>
+      <p>This photo represents my Play Stage, a time when I was learning mostly through everyday experiences — play, curiosity, and simply being comfortable in my own space. It was less about following rules and more about exploring, which is a big part of how young children start to understand the world around them.</p>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="stage-photo"><img src="images/game.jpg" alt="Albie during the Game Stage, in school uniform with a friend"></div>
+    <div>
+      <span class="stage-age">6 – 9 years old</span>
+      <h3>Game Stage</h3>
+      <p>This photo was taken in my school uniform, marking the start of the Game Stage — when I became more aware of rules, roles, and other people around me. Starting school meant learning how to share, cooperate, and understand my place within a bigger group, not just my own household.</p>
+    </div>
+  </div>
+</section>
+
+<div class="stitch"></div>
+
+<!-- LOGB -->
+<section id="logb">
+  <div class="section-head">
+    <span class="eyebrow">03 &middot; Personality</span>
+    <h2>My LOGB Personality</h2>
+    <p>The LOGB personality test describes four personality types: Lions, Otters, Golden Retrievers, and Beavers. The dominant type is determined by the highest score, while the second-highest score represents the sub-dominant type.</p>
+  </div>
+
+  <div class="logb-types">
+    <div><span class="glyph">🦁</span><h4>Lion</h4>Decisive, goal-oriented, independent, persistent, and comfortable taking initiative.</div>
+    <div><span class="glyph">🦦</span><h4>Otter</h4>Enthusiastic, outgoing, communicative, fun-loving, and motivated by social interaction.</div>
+    <div class="active"><span class="glyph">🐕</span><h4>Golden Retriever</h4>Loyal, patient, empathetic, supportive, dependable, and relationship-oriented.</div>
+    <div><span class="glyph">🦫</span><h4>Beaver</h4>Accurate, analytical, detail-oriented, thorough, organized, and focused on quality.</div>
+  </div>
+
+  <div class="score-bars">
+    <div class="score-row"><span>Lion (L)</span><div class="score-track"><div class="score-fill" style="width:61%"></div></div><span>22</span></div>
+    <div class="score-row"><span>Otter (O)</span><div class="score-track"><div class="score-fill" style="width:56%"></div></div><span>20</span></div>
+    <div class="score-row dominant"><span>Golden Retriever (G)</span><div class="score-track"><div class="score-fill" style="width:100%"></div></div><span>36</span></div>
+    <div class="score-row"><span>Beaver (B)</span><div class="score-track"><div class="score-fill" style="width:64%"></div></div><span>23</span></div>
+  </div>
+
+  <div class="logb-result-card">
+    <div>
+      <span class="eyebrow">My LOGB Result</span>
+      <p>My highest score is <strong>Golden Retriever (36)</strong>, making it my dominant personality type. My second-highest score is <strong>Beaver (23)</strong>, making it my sub-dominant type. This suggests that I lead with loyalty, patience, and empathy in how I relate to people, while also carrying a steady, detail-oriented side that keeps me organized and thorough in what I do.</p>
+      <p>Looking at this result, I think it fits me well. I naturally put a lot of value on being dependable and showing up for the people around me — friends, family, and classmates — even when it's not asked of me. At the same time, my Beaver side shows up when I'm working on something that matters, since I tend to slow down, double-check details, and want things done properly rather than rushed. Between the two, I try to be someone people can rely on, both for support and for getting things right.</p>
+    </div>
+    <img src="images/logb-test.png" alt="Completed LOGB personality test scoring sheet">
+  </div>
+</section>
+
+<div class="stitch"></div>
+
+<!-- GENEALOGY -->
+<section id="genealogy">
+  <div class="section-head">
+    <span class="eyebrow">04 &middot; Family &amp; Genealogy</span>
+    <h2>An Item From My Grandfather</h2>
+  </div>
+  <div class="heirloom">
+    <img src="images/boots.jpg" alt="A worn pair of tan work boots inherited from Albie's paternal grandfather">
+    <div>
+      <span class="heirloom-tag">Inherited &middot; Paternal side</span>
+      <h3>My Grandfather's Boots</h3>
+      <p>These boots were inherited from my grandfather on my father's side of the family. They are important to me because they remind me of the hard work and long days he put in while wearing them.</p>
+      <p>What makes them more special is that they still carry the marks of real use — scuffs, dirt, and the softened leather that only come from years of walking, working, and standing on his own two feet. He didn't have fancy gear or shortcuts; he just wore what he had and got the job done.</p>
+      <p>Because of this, the boots are more than just footwear to me. They remind me of my grandfather's strength, resilience, and the quiet dignity of everyday labor. Having these boots makes me feel connected to him and lets me value the grit and memories he left behind.</p>
+    </div>
+  </div>
+</section>
+
+<div class="stitch"></div>
+
+<!-- OCEAN -->
+<section id="ocean">
+  <div class="section-head">
+    <span class="eyebrow">05 &middot; Personality Reflection</span>
+    <h2>My OCEAN Test</h2>
+    <p>The OCEAN activity gathered perspectives from a family member (Albie F. Fernandez), my close friends (Jonard Fernandez, Anthony Fernandez, Vince L. Robles), and my new friends (Ezer Guillen, Cyrus Francisco, Royniel Bacalla). Their answers show that people can see different sides of my personality depending on how well they know me and how comfortable I am around them.</p>
+  </div>
+
+  <div class="ocean-trait">
+    <span class="letter">O</span>
+    <div><h4>Openness</h4><p>I consistently enjoy exploring new or different ideas and respecting other people's values, though my appreciation for art is noticed more often by my close friends than by others.</p></div>
+  </div>
+  <div class="ocean-trait">
+    <span class="letter">C</span>
+    <div><h4>Conscientiousness</h4><p>I am recognized by everyone for being hardworking and following instructions. While my family member sees me as highly careful and punctual, my friends note that I am occasionally more casual with schedules.</p></div>
+  </div>
+  <div class="ocean-trait">
+    <span class="letter">E</span>
+    <div><h4>Extraversion</h4><p>Across all groups, I am viewed as consistently talkative and eager for company. I show higher sociability and a more dominant presence around close friends, while appearing a bit more reserved to new acquaintances.</p></div>
+  </div>
+  <div class="ocean-trait">
+    <span class="letter">A</span>
+    <div><h4>Agreeableness</h4><p>I show a healthy level of independence across all social circles. Rather than simply going along with what others choose, I feel comfortable holding my ground and sharing my own perspective.</p></div>
+  </div>
+  <div class="ocean-trait">
+    <span class="letter">N</span>
+    <div><h4>Neuroticism</h4><p>Across family, close friends, and new acquaintances alike, I am perceived as balanced and steady, only occasionally experiencing moments of worry or emotional stress.</p></div>
+  </div>
+
+  <blockquote>"People can see me differently depending on the relationship they develop with me and the level of my self-confidence."</blockquote>
+
+  <div class="learned">
+    <h4>What I Learned</h4>
+    <p>One thing I learned from the OCEAN activity is that while core traits like hard work, openness to new ideas, and talkativeness remain steady across my relationships, specific behaviors shift based on familiarity. My family member sees me as extremely punctual and structured, whereas my close friends experience my most social, energetic, and assertive self. New friends observe a slightly quieter dynamic as we build mutual comfort. Overall, this assessment helped me realize how personal trust and relationship depth shape how others perceive and experience my personality.</p>
+  </div>
+</section>
+
+<div class="stitch"></div>
+
+<!-- REFLECTION -->
+<section id="reflection" class="reflection">
+  <div class="section-head">
+    <span class="eyebrow">06 &middot; Final Reflection</span>
+    <h2>Looking Back at Myself</h2>
+  </div>
+  <p>Putting this digital autobiography together gave me a chance to look at my life as a whole story instead of just the version of myself I show day to day. My childhood photos remind me how much I've grown — from being cared for, to playing and exploring, to first learning how to fit into a bigger world at school. My grandfather's boots ground that story in something bigger than me, connecting my own effort and persistence to the hard work he put in long before I was born. The LOGB result reminded me that being loyal and dependable isn't just something I do for others — it's genuinely core to who I am, balanced by a quieter drive to get things right. And the OCEAN activity showed me that the "real me" isn't one fixed version, but something that opens up more the more someone gets to know me. Taken together, these pieces don't just describe who I am — they show me why, and that's something I'll carry forward as I keep growing.</p>
+</section>
+
+<footer>
+  Albie V. Fernandez Jr. &middot; BSIT &middot; Digital Autobiography Phase 1
+</footer>
+
+</body>
+</html>
